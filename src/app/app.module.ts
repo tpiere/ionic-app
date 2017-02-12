@@ -22,7 +22,12 @@ import { HttpModule } from '@angular/http';
     PlaylistDetailsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {}, {
+      links:[
+        {component: PostAuthlandingPage, name: 'PostAuthLanding', segment: ':accessToken/playlists'},
+         {component: PlaylistDetailsPage, name: 'PlaylistDetailsPage', segment: ':accessToken/:userId/playlists/:playlistId'}
+      ]
+    }),
     HttpModule
   ],
   bootstrap: [IonicApp],

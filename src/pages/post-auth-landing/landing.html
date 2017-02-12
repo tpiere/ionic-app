@@ -1,10 +1,21 @@
 <!--<button ion-button (click)="getPlaylists()">See Playlists</button>-->
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Hello Ionic</ion-title>
+    </ion-navbar>
+</ion-header>
 
 
- 
+<ion-content padding>
+    <ion-list>
+        <button ion-item 
+            detail-push
+            *ngFor="let playlist of (playlists | async)?.items" (click)="loadPlaylist(playlist.id, playlist.owner.id)">
+       {{playlist.name}} 
+       </button>
 
-<ul>
-    <li *ngFor="let playlist of (playlists | async)?.items" >
-       <button ion-button (click)="loadPlaylist(playlist.id, playlist.owner.id)"> {{playlist.name}} </button>
-    </li>
-</ul>
+    </ion-list>
+</ion-content>ß
