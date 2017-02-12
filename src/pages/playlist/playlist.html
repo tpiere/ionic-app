@@ -1,0 +1,19 @@
+<button ion-button (click)="back()"> &lt; Back</button>
+
+<p *ngIf="playlist == null">
+    Loading...
+</p>
+
+<ul>
+    <li *ngFor="let video of videos">
+        <iframe id="ytplayer" allowfullscreen="allowfullscreen" type="text/html" width="320" height="180" [src]="video.url" frameborder="0"></iframe>
+    </li>
+</ul>
+
+
+<ul *ngIf="playlist != null">
+    <li>loaded </li>
+    <li *ngFor="let song of (playlist | async)?.items">
+        {{song.track.name}} - {{song.track.id}} <a (click)="searchSong(song.track.name, song.track.artists[0].name)">Find on YouTube</a>
+    </li>
+</ul>

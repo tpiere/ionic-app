@@ -1,0 +1,28 @@
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Top Artists</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <h3>From Spotify</h3>
+
+  <ol>
+    <li *ngFor="let artist of topArtists | async">
+       <!--<img src="{{artist.images[artist.images.length - 1].url}}" /> -->
+       {{artist.name}}
+    </li>
+  </ol>
+
+  <!--<div>
+      {{topArtists | async | json}}
+  </div>
+ -->
+
+</ion-content>

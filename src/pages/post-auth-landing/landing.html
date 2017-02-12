@@ -1,0 +1,10 @@
+<!--<button ion-button (click)="getPlaylists()">See Playlists</button>-->
+
+
+ 
+
+<ul>
+    <li *ngFor="let playlist of (playlists | async)?.items" >
+       <button ion-button (click)="loadPlaylist(playlist.id, playlist.owner.id)"> {{playlist.name}} </button>
+    </li>
+</ul>
