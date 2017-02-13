@@ -12,11 +12,11 @@
 
     <button ion-button (click)="back()"> &lt; Back</button>
 
-   
-        <div *ngFor="let video of videos">
-            <iframe id="ytplayer" allowfullscreen="allowfullscreen" type="text/html" width="320" height="180" [src]="video.url" frameborder="0"></iframe>
-        </div>
-   
+
+    <div *ngFor="let video of videos">
+        <iframe id="ytplayer" allowfullscreen="allowfullscreen" type="text/html" width="320" height="180" [src]="video.url" frameborder="0"></iframe>
+    </div>
+
 
 
     <ion-list *ngIf="playlist != null">
@@ -24,4 +24,13 @@
             {{song.track.name}} - {{song.track.artists[0].name}} <a (click)="searchSong(song.track.name, song.track.artists[0].name)">Find on YouTube</a>
         </ion-item>
     </ion-list>
+
+    <ion-fab bottom="" right="">
+        <button color="danger" ion-fab="" class="fab fab-ios fab-ios-danger activated">
+            <ion-icon class="fab-close-icon icon icon-ios ion-ios-close" name="close" role="img" aria-label="close">
+            </ion-icon><span class="button-inner"><ion-icon name="add" role="img" class="icon icon-ios ion-ios-add" aria-label="add"></ion-icon>
+            </span><div class="button-effect"></div>
+        </button>
+        New Playlist
+    </ion-fab>
 </ion-content>

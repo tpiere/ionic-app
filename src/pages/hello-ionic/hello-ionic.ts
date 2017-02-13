@@ -43,29 +43,33 @@ export class HelloIonicPage {
       var GoogleAuth; // Google Auth object.
       function initClient() {
         api.client.init({
-          'apiKey': 'AIzaSyCiMdm16j7he0xSrgnQ78MEjlmctL3gtb0',
-          //'clientId': '746926310137-khlo1vmtid5j6mhrh19phc4fcqcvfsss.apps.googleusercontent.com',
-          // 'scope': 'https://www.googleapis.com/auth/youtube.force-ssl',
+          //'apiKey': 'AIzaSyCiMdm16j7he0xSrgnQ78MEjlmctL3gtb0',
+          'clientId': '746926310137-khlo1vmtid5j6mhrh19phc4fcqcvfsss.apps.googleusercontent.com',
+           'scope': 'https://www.googleapis.com/auth/youtube',
           'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest']
         }).then(() => {
-          //GoogleAuth = api.auth2.getAuthInstance();
+          GoogleAuth = api.auth2.getAuthInstance();
           console.log('after init');
-          api.client.youtube.search.list({ part: "snippet", q: "waves by bayonne", chart: "mostPopular", type:"video" })
-            .then(response => {
-              console.log(response);
-              page._ngZone.run(() => {
-                page.videos = response.result.items.map(item => {
-                  let urlTemplate = `https://www.youtube.com/embed/${item.id.videoId}?autoplay=0&origin=${window.location.origin}`;
-
-                  return { url: page.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate) }
-                });
-                //window.$("body").append(result);
-              });
-
-            }
-            );
+          GoogleAuth.signIn();
           // Listen for sign-in state changes.
-          //GoogleAuth.isSignedIn.listen(updateSigninStatus);
+          GoogleAuth.isSignedIn.listen(status => {
+            console.log("signed in status", status);
+          });
+          // api.client.youtube.search.list({ part: "snippet", q: "waves by bayonne", chart: "mostPopular", type:"video" })
+          //   .then(response => {
+          //     console.log(response);
+          //     page._ngZone.run(() => {
+          //       page.videos = response.result.items.map(item => {
+          //         let urlTemplate = `https://www.youtube.com/embed/${item.id.videoId}?autoplay=0&origin=${window.location.origin}`;
+
+          //         return { url: page.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate) }
+          //       });
+          //       //window.$("body").append(result);
+          //     });
+
+          //   }
+          //   );
+          
         });
       }
 
