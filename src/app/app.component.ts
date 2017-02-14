@@ -9,6 +9,8 @@ import { ListPage } from '../pages/list/list';
 import { topArtists } from '../pages/top-artists/top-artists.component';
 import { PostAuthlandingPage } from '../pages/post-auth-landing/landing';
 
+
+
 @Component({
   templateUrl: 'app.html'
 })

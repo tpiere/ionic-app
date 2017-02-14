@@ -6,10 +6,12 @@ import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { topArtists } from '../pages/top-artists/top-artists.component';
 import { PostAuthlandingPage } from '../pages/post-auth-landing/landing';
 import { PlaylistDetailsPage } from '../pages/playlist/playlist';
+import { PopoverPage } from '../pages/playlist/create-popover';
 
 import { ListPage } from '../pages/list/list';
 import { HttpModule } from '@angular/http';
 
+import {GapiService} from '../services/gapi.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { HttpModule } from '@angular/http';
     ListPage,
     topArtists,
     PostAuthlandingPage,
-    PlaylistDetailsPage
+    PlaylistDetailsPage,
+    PopoverPage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {}, {
@@ -38,8 +41,9 @@ import { HttpModule } from '@angular/http';
     ListPage,
     topArtists,
     PostAuthlandingPage,
-    PlaylistDetailsPage
+    PlaylistDetailsPage,
+    PopoverPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, GapiService]
 })
 export class AppModule {}

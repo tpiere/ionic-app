@@ -21,12 +21,13 @@
 
     <ion-list *ngIf="playlist != null">
         <ion-item *ngFor="let song of (playlist | async)?.items">
-            {{song.track.name}} - {{song.track.artists[0].name}} <a (click)="searchSong(song.track.name, song.track.artists[0].name)">Find on YouTube</a>
+            {{song.track.name}} - {{song.track.artists[0].name}} <a (click)="loadSong(song.track.name, song.track.artists[0].name)">Find on YouTube</a>
         </ion-item>
     </ion-list>
 
-    <ion-fab bottom="" right="">
-        <button color="danger" ion-fab="" class="fab fab-ios fab-ios-danger activated">
+    <ion-fab top="" right="">
+        <button color="danger" ion-fab="" class="fab fab-ios fab-ios-danger activated"
+            (click)="presentPopover($event)">
             <ion-icon class="fab-close-icon icon icon-ios ion-ios-close" name="close" role="img" aria-label="close">
             </ion-icon><span class="button-inner"><ion-icon name="add" role="img" class="icon icon-ios ion-ios-add" aria-label="add"></ion-icon>
             </span><div class="button-effect"></div>

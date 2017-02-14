@@ -1,12 +1,14 @@
 import { Component, NgZone } from '@angular/core';
 import { Http, RequestOptions, Request, RequestMethod, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 //import Q from 'q';
 import * as gapi from 'google-client-api';
 import { DomSanitizer } from '@angular/platform-browser'
+import { PopoverPage } from './create-popover.ts'
 
+import { GapiService } from '../../services/gapi.service'
 
 @Component({
   selector: 'playlist-details',
@@ -19,7 +21,12 @@ export class PlaylistDetailsPage {
   videos: any = null;
 
   constructor(public navCtrl: NavController,
-    private navParams: NavParams, private http: Http, private sanitizer: DomSanitizer, private _ngZone: NgZone) {
+    private navParams: NavParams,
+    private http: Http,
+    private sanitizer: DomSanitizer,
+    private _ngZone: NgZone,
+    public popoverCtrl: PopoverController,
+    private gapiService: GapiService) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.spotifyApi = new SpotifyWebApi();
@@ -61,50 +68,114 @@ export class PlaylistDetailsPage {
 
   }
 
-  searchSong(title, artist) {
-    console.log(`search for ${title} by ${artist}`);
+  loadSong(title, artist) {
+    console.log(`load song for ${title} by ${artist}`);
+    this.gapiService.findSong(title, artist)
+      .then(response => {
+        console.log(response);
+        this._ngZone.run(() => {
+          this.videos = response.result.items.map(item => {
+            let urlTemplate = `https://www.youtube.com/embed/${item.id.videoId}?autoplay=0&origin=${window.location.origin}`;
 
-    var page = this;
-    gapi().then(api => {
-      console.log('the real api', api);
-
-      initClient();
-
-      var GoogleAuth; // Google Auth object.
-      function initClient() {
-        api.client.init({
-          'apiKey': 'AIzaSyCiMdm16j7he0xSrgnQ78MEjlmctL3gtb0',
-          //'clientId': '746926310137-khlo1vmtid5j6mhrh19phc4fcqcvfsss.apps.googleusercontent.com',
-          // 'scope': 'https://www.googleapis.com/auth/youtube.force-ssl',
-          'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest']
-        }).then(() => {
-          //GoogleAuth = api.auth2.getAuthInstance();
-          console.log('after init');
-          api.client.youtube.search.list({ part: "snippet", q: `${title} by ${artist}`, chart: "mostPopular", type: "video", maxResults: 1 })
-            .then(response => {
-              console.log(response);
-              page._ngZone.run(() => {
-                page.videos = response.result.items.map(item => {
-                  let urlTemplate = `https://www.youtube.com/embed/${item.id.videoId}?autoplay=0&origin=${window.location.origin}`;
-
-                  return { url: page.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate) }
-                });
-                //window.$("body").append(result);
-              });
-
-            }
-            );
-          // Listen for sign-in state changes.
-          //GoogleAuth.isSignedIn.listen(updateSigninStatus);
+            return { url: this.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate) }
+          });
+          //window.$("body").append(result);
         });
-      }
-    }
-    );
+      })
+      .catch(err => { });
+
+
+
+    // var page = this;
+    // gapi().then(api => {
+    //   console.log('the real api', api);
+
+    //   initClient();
+
+    //   var GoogleAuth; // Google Auth object.
+    //   function initClient() {
+    //     api.client.init({
+    //       'apiKey': 'AIzaSyCiMdm16j7he0xSrgnQ78MEjlmctL3gtb0',
+    //       //'clientId': '746926310137-khlo1vmtid5j6mhrh19phc4fcqcvfsss.apps.googleusercontent.com',
+    //       // 'scope': 'https://www.googleapis.com/auth/youtube.force-ssl',
+    //       'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest']
+    //     }).then(() => {
+    //       //GoogleAuth = api.auth2.getAuthInstance();
+    //       console.log('after init');
+    //       api.client.youtube.search.list({ part: "snippet", q: `${title} by ${artist}`, chart: "mostPopular", type: "video", maxResults: 1 })
+    //         .then(response => {
+    //           console.log(response);
+    //           page._ngZone.run(() => {
+    //             page.videos = response.result.items.map(item => {
+    //               let urlTemplate = `https://www.youtube.com/embed/${item.id.videoId}?autoplay=0&origin=${window.location.origin}`;
+
+    //               return { url: page.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate) }
+    //             });
+    //             //window.$("body").append(result);
+    //           });
+
+    //         }
+    //         );
+    //       // Listen for sign-in state changes.
+    //       //GoogleAuth.isSignedIn.listen(updateSigninStatus);
+    //     });
+    //   }
+    // }
+    // );
 
   }
 
+  // searchSong(title, artist) {
+  //   console.log(`search for ${title} by ${artist}`);
+
+  //   var page = this;
+  //   gapi().then(api => {
+  //     console.log('the real api', api);
+
+  //     initClient();
+
+  //     var GoogleAuth; // Google Auth object.
+  //     function initClient() {
+  //       api.client.init({
+  //         'apiKey': 'AIzaSyCiMdm16j7he0xSrgnQ78MEjlmctL3gtb0',
+  //         //'clientId': '746926310137-khlo1vmtid5j6mhrh19phc4fcqcvfsss.apps.googleusercontent.com',
+  //         // 'scope': 'https://www.googleapis.com/auth/youtube.force-ssl',
+  //         'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest']
+  //       }).then(() => {
+  //         //GoogleAuth = api.auth2.getAuthInstance();
+  //         console.log('after init');
+  //         api.client.youtube.search.list({ part: "snippet", q: `${title} by ${artist}`, chart: "mostPopular", type: "video", maxResults: 1 })
+  //           .then(response => {
+  //             console.log(response);
+  //             page._ngZone.run(() => {
+  //               page.videos = response.result.items.map(item => {
+  //                 let urlTemplate = `https://www.youtube.com/embed/${item.id.videoId}?autoplay=0&origin=${window.location.origin}`;
+
+  //                 return { url: page.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate) }
+  //               });
+  //               //window.$("body").append(result);
+  //             });
+
+  //           }
+  //           );
+  //         // Listen for sign-in state changes.
+  //         //GoogleAuth.isSignedIn.listen(updateSigninStatus);
+  //       });
+  //     }
+  //   }
+  //   );
+
+  // }
+
   back() {
     this.navCtrl.pop();
+  }
+
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({
+      ev: myEvent
+    });
   }
 
 }
