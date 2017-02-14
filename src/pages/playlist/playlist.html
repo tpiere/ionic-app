@@ -12,16 +12,20 @@
 
     <button ion-button (click)="back()"> &lt; Back</button>
 
-
     <div *ngFor="let video of videos">
         <iframe id="ytplayer" allowfullscreen="allowfullscreen" type="text/html" width="320" height="180" [src]="video.url" frameborder="0"></iframe>
     </div>
 
+    <button ion-button (click)="loadAll()"> Find All on YouTube </button>
 
 
     <ion-list *ngIf="playlist != null">
-        <ion-item *ngFor="let song of (playlist | async)?.items">
+        <ion-item *ngFor="let song of playlist.items">
             {{song.track.name}} - {{song.track.artists[0].name}} <a (click)="loadSong(song.track.name, song.track.artists[0].name)">Find on YouTube</a>
+            <ion-spinner *ngIf="song.loadingPromise != null" name="crescent"></ion-spinner>
+            <iframe *ngIf="song.videoUrl != null" id="ytplayer{{song.videoId}}" allowfullscreen="allowfullscreen" type="text/html" width="106" height="60" 
+            [src]="song.videoUrl" frameborder="0"></iframe>
+    
         </ion-item>
     </ion-list>
 
