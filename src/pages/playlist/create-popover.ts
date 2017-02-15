@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Http, RequestOptions, Request, RequestMethod, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 //import Q from 'q';
 import * as gapi from 'google-client-api';
@@ -17,10 +17,10 @@ export class PopoverPage {
   public playlistName: string;
 
   private GoogleAuth: any;
-  private api:any;
-  constructor(public viewCtrl: ViewController,  private gapiService: GapiService) { }
+  private api: any;
+  constructor(public viewCtrl: ViewController, private gapiService: GapiService, public toastCtrl: ToastController) { }
 
-  ngOnInit(){
+  ngOnInit() {
     //this.testGapi();
   }
 
@@ -39,7 +39,32 @@ export class PopoverPage {
   onSubmit() {
     console.log(this.playlistName);
 
-    this.gapiService.createPlaylist(this.playlistName);
+    this.gapiService.createPlaylist(this.playlistName)
+      .then(response => {
+        console.log(response);
+        let toast = this.toastCtrl.create({
+          message: 'Playlist created successfully',
+          duration: 3000,
+          position:'top',
+          cssClass: 'danger'
+          
+        });
+        toast.present();
+
+        this.close();
+      },
+        error => {
+          let toast = this.toastCtrl.create({
+          message: `Failed to create playlist`,
+          showCloseButton:true,
+          //duration: 3000,
+          position:'bottom',
+          cssClass: 'danger'
+          
+        });
+        toast.present();
+        }
+      );
     //this.viewCtrl.dismiss();
 
     // if (this.GoogleAuth.isSignedIn.get()) {

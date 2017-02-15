@@ -267,11 +267,13 @@ export class GapiService {
                 },
                 (err) => {
                     console.log(err);
+                    reject(err);
                 }
 
                 )
                 .catch(err => {
                     console.log('catch', err);
+                     reject(err);
                 });
         });
 
