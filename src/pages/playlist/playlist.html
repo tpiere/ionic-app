@@ -24,6 +24,8 @@
 
     <button ion-button (click)="loadYoutubePlaylists()"> Load YouTube Playlists</button>
 
+    <button ion-button (click)="addSelectedSongsToPlaylist()"> Add songs to playlist</button>
+
 
     <ion-list *ngIf="youtubePlaylists != null">
         <ion-item>
@@ -44,7 +46,7 @@
                     <ion-icon name="logo-youtube"></ion-icon>
                 </a>
                 <ion-spinner *ngIf="song.loadingPromise != null" name="crescent"></ion-spinner>
-
+                <ion-icon *ngIf="song.isAdded"  name="checkmark"></ion-icon>
             </ion-label>
             <!--<iframe *ngIf="song.videoUrl != null" id="ytplayer{{song.videoId}}" allowfullscreen="allowfullscreen" type="text/html" width="106"-->
             <!--height="60" [src]="song.videoUrl" frameborder="0"></iframe>-->
@@ -52,7 +54,7 @@
         </ion-item>
     </ion-list>
 
-    <ion-fab top="" right="">
+    <ion-fab bottom="" right="">
         <button color="danger" ion-fab="" class="fab fab-ios fab-ios-danger activated" (click)="presentPopover($event)">
             <ion-icon class="fab-close-icon icon icon-ios ion-ios-close" name="close" role="img" aria-label="close">
             </ion-icon><span class="button-inner"><ion-icon name="add" role="img" class="icon icon-ios ion-ios-add" aria-label="add"></ion-icon>

@@ -3,12 +3,13 @@ import { Http, RequestOptions, Request, RequestMethod, Headers } from '@angular/
 import 'rxjs/add/operator/map';
 import { NavController, NavParams, PopoverController } from 'ionic-angular';
 import * as SpotifyWebApi from 'spotify-web-api-js';
-//import Q from 'q';
+import Q from 'q';
 import * as gapi from 'google-client-api';
 import { DomSanitizer } from '@angular/platform-browser'
 import { PopoverPage } from './create-popover.ts'
 
 import { GapiService } from '../../services/gapi.service'
+import * as _ from 'lodash';
 
 @Component({
   selector: 'playlist-details',
@@ -20,6 +21,7 @@ export class PlaylistDetailsPage {
   private spotifyApi;
   videos: any = null;
   youtubePlaylists: any = null;
+  youtubePlaylist: string = null;
 
   constructor(public navCtrl: NavController,
     private navParams: NavParams,
@@ -87,7 +89,7 @@ export class PlaylistDetailsPage {
 
   }
 
-  loadAll(){
+  loadAll() {
     this.playlist.items = this.findAllOnYouTube(this.playlist.items);
   }
 
@@ -97,7 +99,7 @@ export class PlaylistDetailsPage {
         track: song.track,
         loadingPromise: null,
         videoId: null,
-        videoUrl:null
+        videoUrl: null
       };
       let ytPromise = this.gapiService.findSong(song.track.name, song.track.artists[0].name);
 
@@ -108,9 +110,9 @@ export class PlaylistDetailsPage {
 
           let urlTemplate = `https://www.youtube.com/embed/${newObj.videoId}?autoplay=0&origin=${window.location.origin}`;
 
-          newObj.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate) 
+          newObj.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate)
         }
-        
+
       }, err => {
         console.log(err);
       });
@@ -120,11 +122,11 @@ export class PlaylistDetailsPage {
     });
   }
 
-  signOutOfGoogle(){
+  signOutOfGoogle() {
     this.gapiService.signOut();
   }
 
-  disconnectFromGoogle(){
+  disconnectFromGoogle() {
     this.gapiService.disconnect();
   }
 
@@ -139,18 +141,41 @@ export class PlaylistDetailsPage {
     });
   }
 
-  loadYoutubePlaylists(){
-     
+  loadYoutubePlaylists() {
+
     this.gapiService.retrievePlaylists()
       .then(response => {
         console.log(response);
         this._ngZone.run(() => {
           this.youtubePlaylists = response.result.items.map(item => {
-            return {id: item.id, title:item.snippet.title};
+            return { id: item.id, title: item.snippet.title };
           });
         });
       })
-      .catch(err => { console.log(err);});
+      .catch(err => { console.log(err); });
+  }
+
+  addSelectedSongsToPlaylist() {
+
+    var tasks = [];
+    _.each(this.playlist.items, (song) => {
+      if (song.isSelected) {
+        var newTask = () => {
+          let ytPromise = this.gapiService.addVideoToPlaylist(this.youtubePlaylist, song.videoId);
+
+          ytPromise.then(response => {
+            this._ngZone.run(() => {
+              song.isAdded = true;
+
+            });
+
+          });
+          return ytPromise;
+        };
+        tasks.push(newTask);
+      }
+    });
+    tasks.reduce(Q.when, Q());
   }
 
 }

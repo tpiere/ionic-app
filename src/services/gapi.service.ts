@@ -154,17 +154,17 @@ export class GapiService {
         return new Promise((resolve, reject) => {
 
             this.retrieveInitializedGapi(true)
-            .then(this.signIntoGoogle)
-            .then((api) => {
-                api.client.youtube.search.list(
-                    {
-                        part: "snippet",
-                        q: `${title} by ${artist}`,
-                        chart: "mostPopular",
-                        type: "video", maxResults: 1
-                    })
-                    .then(response => resolve(response), err => reject(err));
-            });
+                .then(this.signIntoGoogle)
+                .then((api) => {
+                    api.client.youtube.search.list(
+                        {
+                            part: "snippet",
+                            q: `${title} by ${artist}`,
+                            chart: "mostPopular",
+                            type: "video", maxResults: 1
+                        })
+                        .then(response => resolve(response), err => reject(err));
+                });
         });
     }
 
@@ -278,7 +278,7 @@ export class GapiService {
 
     }
 
-    retrievePlaylists():Promise<any> {
+    retrievePlaylists(): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
@@ -286,7 +286,7 @@ export class GapiService {
                 .then(this.signIntoGoogle)
                 // .then(this.grantYoutubePermission)
                 .then((api) => {
-                    api.client.youtube.playlists.list({ part: 'snippet', mine:true })
+                    api.client.youtube.playlists.list({ part: 'snippet', mine: true })
                         .then(response => resolve(response), err => reject(err));
                 },
                 (err) => {
@@ -301,5 +301,39 @@ export class GapiService {
 
 
     }
+
+    addVideoToPlaylist(playlistId: string, videoId: string): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            this.retrieveInitializedGapi(true)
+                .then(this.signIntoGoogle)
+                // .then(this.grantYoutubePermission)
+                .then((api) => {
+                    api.client.youtube.playlistItems.insert({
+                        part: 'snippet',
+                        snippet: {
+                            playlistId: playlistId,
+                            resourceId: {
+                                videoId: videoId,
+                                kind: 'youtube#video'
+                            }
+                        }
+                    })
+                        .then(response => resolve(response), err => reject(err));
+                },
+                (err) => {
+                    console.log(err);
+                }
+
+                )
+                .catch(err => {
+                    console.log('catch', err);
+                });
+        });
+
+
+    }
+
 
 }
