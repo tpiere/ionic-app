@@ -19,6 +19,7 @@ export class PlaylistDetailsPage {
   playlist: any = null;
   private spotifyApi;
   videos: any = null;
+  youtubePlaylists: any = null;
 
   constructor(public navCtrl: NavController,
     private navParams: NavParams,
@@ -111,7 +112,7 @@ export class PlaylistDetailsPage {
         }
         
       }, err => {
-
+        console.log(err);
       });
 
       newObj.loadingPromise = ytPromise;
@@ -119,6 +120,13 @@ export class PlaylistDetailsPage {
     });
   }
 
+  signOutOfGoogle(){
+    this.gapiService.signOut();
+  }
+
+  disconnectFromGoogle(){
+    this.gapiService.disconnect();
+  }
 
   back() {
     this.navCtrl.pop();
@@ -129,6 +137,20 @@ export class PlaylistDetailsPage {
     popover.present({
       ev: myEvent
     });
+  }
+
+  loadYoutubePlaylists(){
+     
+    this.gapiService.retrievePlaylists()
+      .then(response => {
+        console.log(response);
+        this._ngZone.run(() => {
+          this.youtubePlaylists = response.result.items.map(item => {
+            return {id: item.id, title:item.snippet.title};
+          });
+        });
+      })
+      .catch(err => { console.log(err);});
   }
 
 }
