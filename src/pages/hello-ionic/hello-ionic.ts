@@ -33,6 +33,11 @@ export class HelloIonicPage {
     this.testResult = this.http.get('http://localhost:3000/testing');
   }
 
+  doRefresh(refresher){
+    window.location.reload(true);
+    refresher.complete();
+  }
+
   testGapi() {
     var page = this;
     gapi().then(api => {
