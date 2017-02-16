@@ -25,6 +25,7 @@ export class MyApp {
     public platform: Platform,
     public menu: MenuController
   ) {
+     console.log('app constructor window.location', window.location);
     this.initializeApp();
 
     // set our app's pages
@@ -36,6 +37,7 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+       console.log('platform ready - window.location', window.location);
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
