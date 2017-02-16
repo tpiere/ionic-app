@@ -36,16 +36,16 @@ export class MyApp {
   }
 
   initializeApp() {
+    let tokenRegex = /access_token=([^&]*)/i,
+        accessTokenParsed =  window.location.hash.match(tokenRegex),
+        accessToken;
+
     this.platform.ready().then(() => {
        console.log('platform ready - window.location', window.location);
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
-      
-      let tokenRegex = /access_token=([^&]*)/i,
-        accessTokenParsed =  window.location.hash.match(tokenRegex),
-        accessToken;
        
         if(accessTokenParsed != null && accessTokenParsed.length > 1){
           accessToken = accessTokenParsed[1];
