@@ -1,30 +1,29 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-        <ion-title>Hello Ionic</ion-title>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Spotify Playlist Details</ion-title>
     </ion-navbar>
+    <ion-toolbar>
+    <!--<ion-title>Controls</ion-title>-->
+
+        <button ion-button (click)="back()"> &lt; Back</button>
+      <button ion-button (click)="loadAll()"> Find All on YouTube </button>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
 
-    <button ion-button (click)="back()"> &lt; Back</button>
 
     <div *ngFor="let video of videos">
         <iframe id="ytplayer" allowfullscreen="allowfullscreen" type="text/html" width="320" height="180" [src]="video.url" frameborder="0"></iframe>
     </div>
 
-    <button ion-button (click)="loadAll()"> Find All on YouTube </button>
+    <!--<button ion-button (click)="loadYoutubePlaylists()"> Load YouTube Playlists</button>-->
 
-    <button ion-button (click)="signOutOfGoogle()"> Sign Out - Google </button>
-
-    <button ion-button (click)="disconnectFromGoogle()"> Disconnect - Google </button>
-
-    <button ion-button (click)="loadYoutubePlaylists()"> Load YouTube Playlists</button>
-
-    <button ion-button (click)="addSelectedSongsToPlaylist()"> Add songs to playlist</button>
+    <!--<button ion-button (click)="addSelectedSongsToPlaylist()"> Add songs to playlist</button>-->
 
 
     <ion-list *ngIf="youtubePlaylists != null">
@@ -37,21 +36,27 @@
     </ion-list>
 
     <ion-list *ngIf="playlist != null">
-        <ion-item *ngFor="let song of playlist.items">
+        <div *ngFor="let song of playlist.items">
+             <!--<a (click)="loadSong(song.track.name, song.track.artists[0].name)">
+                        <ion-icon name="logo-youtube"></ion-icon>
+            </a>-->
+            <ion-item >
 
-            <ion-checkbox *ngIf="song.videoId != null" [(ngModel)]="song.isSelected"></ion-checkbox>
-            <ion-label>{{song.track.name}} - {{song.track.artists[0].name}}
+                <!--<ion-checkbox *ngIf="song.videoId != null" [(ngModel)]="song.isSelected"></ion-checkbox>-->
+                <!--<ion-label>-->
+                    {{song.track.name}} - {{song.track.artists[0].name}}
 
-                <a (click)="loadSong(song.track.name, song.track.artists[0].name)">
-                    <ion-icon name="logo-youtube"></ion-icon>
-                </a>
-                <ion-spinner *ngIf="song.loadingPromise != null" name="crescent"></ion-spinner>
-                <ion-icon *ngIf="song.isAdded"  name="checkmark"></ion-icon>
-            </ion-label>
-            <!--<iframe *ngIf="song.videoUrl != null" id="ytplayer{{song.videoId}}" allowfullscreen="allowfullscreen" type="text/html" width="106"-->
-            <!--height="60" [src]="song.videoUrl" frameborder="0"></iframe>-->
+                    <!--<a (click)="loadSong(song.track.name, song.track.artists[0].name)">
+                        <ion-icon name="logo-youtube"></ion-icon>
+                    </a>
+                    <ion-spinner *ngIf="song.loadingPromise != null" name="crescent"></ion-spinner>
+                    <ion-icon *ngIf="song.isAdded" name="checkmark"></ion-icon>-->
+                <!--</ion-label>-->
+                <!--<iframe *ngIf="song.videoUrl != null" id="ytplayer{{song.videoId}}" allowfullscreen="allowfullscreen" type="text/html" width="106"-->
+                <!--height="60" [src]="song.videoUrl" frameborder="0"></iframe>-->
 
-        </ion-item>
+            </ion-item>
+        </div>
     </ion-list>
 
     <ion-fab bottom="" right="">

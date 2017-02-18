@@ -7,7 +7,8 @@ import { topArtists } from '../pages/top-artists/top-artists.component';
 import { PostAuthlandingPage } from '../pages/post-auth-landing/landing';
 import { PlaylistDetailsPage } from '../pages/playlist/playlist';
 import { PopoverPage } from '../pages/playlist/create-popover';
-
+import {YoutubeSonglistPage} from '../pages/playlist/youtube-songlist';
+import {YoutubePlaylistSelectPage } from '../pages/playlist/youtube-playlist-select';
 import { ListPage } from '../pages/list/list';
 import { HttpModule } from '@angular/http';
 
@@ -22,13 +23,21 @@ import {GapiService} from '../services/gapi.service';
     topArtists,
     PostAuthlandingPage,
     PlaylistDetailsPage,
-    PopoverPage
+    PopoverPage,
+    YoutubeSonglistPage,
+    YoutubePlaylistSelectPage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {}, {
       links:[
-        {component: PostAuthlandingPage, name: 'PostAuthLanding', segment: ':accessToken/playlists'},
-         {component: PlaylistDetailsPage, name: 'PlaylistDetailsPage', segment: ':accessToken/:userId/playlists/:playlistId'}
+        {component: PostAuthlandingPage, 
+          name: 'PostAuthLanding', 
+          segment: ':accessToken/playlists',
+          defaultHistory: [HelloIonicPage]},
+         {component: PlaylistDetailsPage, 
+           name: 'PlaylistDetailsPage', 
+           segment: ':accessToken/:userId/playlists/:playlistId',
+           defaultHistory: [HelloIonicPage]}
       ]
     }),
     HttpModule
@@ -42,7 +51,9 @@ import {GapiService} from '../services/gapi.service';
     topArtists,
     PostAuthlandingPage,
     PlaylistDetailsPage,
-    PopoverPage
+    PopoverPage,
+    YoutubeSonglistPage,
+    YoutubePlaylistSelectPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, GapiService]
 })

@@ -1,6 +1,6 @@
 import * as gapi from 'google-client-api';
 import { Injectable } from '@angular/core';
-
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Injectable()
 export class GapiService {
@@ -10,7 +10,9 @@ export class GapiService {
 
     private initializedApi: any = null;
 
-    constructor() {
+    constructor(
+        private sanitizer: DomSanitizer,
+    ) {
         // gapi().then(api => {
         //     this.api = api;
         //     api.client.init({
@@ -163,8 +165,54 @@ export class GapiService {
                             chart: "mostPopular",
                             type: "video", maxResults: 1
                         })
-                        .then(response => resolve(response), err => reject(err));
+                        .then(response => {
+                            let video = response.result.items[0],
+                                videoId = video.id.videoId;
+
+                            video.spotifyParams = {
+                                title: title,
+                                artist: artist
+                            };
+
+
+                            let urlTemplate = `https://www.youtube.com/embed/${videoId}?autoplay=0&origin=${window.location.origin}`;
+
+                            video.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate)
+
+
+
+                            resolve(video);
+                        }, err => reject(err));
                 });
+        });
+    }
+
+    findSongs(list) {
+        return list.map(song => {
+            //   let newObj = {
+            //     track: song.track,
+            //     loadingPromise: null,
+            //     videoId: null,
+            //     videoUrl: null
+            //   };
+            let ytPromise = this.findSong(song.track.name, song.track.artists[0].name);
+
+            //   ytPromise.then(response => {
+            //     newObj.loadingPromise = null;
+            //     if (response.result.items.length > 0) {
+            //       newObj.videoId = response.result.items[0].id.videoId;
+
+            //       let urlTemplate = `https://www.youtube.com/embed/${newObj.videoId}?autoplay=0&origin=${window.location.origin}`;
+
+            //       newObj.videoUrl = this.bypassSecurityTrustResourceUrl(urlTemplate)
+            //     }
+
+            //   }, err => {
+            //     console.log(err);
+            //   });
+
+            //  newObj.loadingPromise = ytPromise;
+            return ytPromise;
         });
     }
 
@@ -273,7 +321,7 @@ export class GapiService {
                 )
                 .catch(err => {
                     console.log('catch', err);
-                     reject(err);
+                    reject(err);
                 });
         });
 

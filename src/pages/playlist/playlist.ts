@@ -1,12 +1,13 @@
 import { Component, NgZone } from '@angular/core';
 import { Http, RequestOptions, Request, RequestMethod, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { NavController, NavParams, PopoverController } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, ToastController, LoadingController } from 'ionic-angular';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 import Q from 'q';
 import * as gapi from 'google-client-api';
 import { DomSanitizer } from '@angular/platform-browser'
 import { PopoverPage } from './create-popover.ts'
+import {YoutubeSonglistPage} from './youtube-songlist'
 
 import { GapiService } from '../../services/gapi.service'
 import * as _ from 'lodash';
@@ -29,7 +30,9 @@ export class PlaylistDetailsPage {
     private sanitizer: DomSanitizer,
     private _ngZone: NgZone,
     public popoverCtrl: PopoverController,
-    private gapiService: GapiService) {
+    private gapiService: GapiService,
+    public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.spotifyApi = new SpotifyWebApi();
@@ -46,6 +49,7 @@ export class PlaylistDetailsPage {
 
     playlistPromise.then(data => {
       console.log('playlist ', data);
+      data.items = _.reject(data.items, item => { return item.track == null });
       this.playlist = data;
     });
 
@@ -90,7 +94,26 @@ export class PlaylistDetailsPage {
   }
 
   loadAll() {
-    this.playlist.items = this.findAllOnYouTube(this.playlist.items);
+    //this.playlist.items = this.findAllOnYouTube(this.playlist.items);
+    var allSongPromises = this.gapiService.findSongs(this.playlist.items);
+    let loader = this.loadingCtrl.create({
+      content: 'Searching for songs on youtube...'
+    });
+    Promise.all(allSongPromises).then(
+      resp => {
+        loader.dismiss();
+        this.navCtrl.push(YoutubeSonglistPage,
+          new NavParams({ youtubeSongList: resp }));
+      },
+      err => {
+        loader.dismiss();
+        console.log(err);
+        let toaster = this.toastCtrl.create({
+          message: 'Failed to find songs on youtube'
+        });
+        toaster.present();
+      }
+    )
   }
 
   private findAllOnYouTube(list) {

@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu side="left" [content]="content">
 
   <ion-header>
     <ion-toolbar>
@@ -11,6 +11,24 @@
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+ <ion-menu side="right" [content]="content">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Profile</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item >Sign out - Spotify</button>
+      <button ion-item >Sign out - Google</button>
+      <button ion-item >Revoke access - Google</button>
     </ion-list>
   </ion-content>
 
