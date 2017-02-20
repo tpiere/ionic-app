@@ -7,7 +7,7 @@ import Q from 'q';
 import * as gapi from 'google-client-api';
 import { DomSanitizer } from '@angular/platform-browser'
 import { PopoverPage } from './create-popover.ts'
-import {YoutubeSonglistPage} from './youtube-songlist'
+import { YoutubeSonglistPage } from './youtube-songlist'
 
 import { GapiService } from '../../services/gapi.service'
 import * as _ from 'lodash';
@@ -94,26 +94,29 @@ export class PlaylistDetailsPage {
   }
 
   loadAll() {
-    //this.playlist.items = this.findAllOnYouTube(this.playlist.items);
-    var allSongPromises = this.gapiService.findSongs(this.playlist.items);
-    let loader = this.loadingCtrl.create({
-      content: 'Searching for songs on youtube...'
-    });
-    Promise.all(allSongPromises).then(
-      resp => {
-        loader.dismiss();
-        this.navCtrl.push(YoutubeSonglistPage,
-          new NavParams({ youtubeSongList: resp }));
-      },
-      err => {
-        loader.dismiss();
-        console.log(err);
-        let toaster = this.toastCtrl.create({
-          message: 'Failed to find songs on youtube'
-        });
-        toaster.present();
-      }
-    )
+    this.gapiService.signIn().then((res) => {
+      //this.playlist.items = this.findAllOnYouTube(this.playlist.items);
+      var allSongPromises = this.gapiService.findSongs(this.playlist.items);
+      let loader = this.loadingCtrl.create({
+        content: 'Searching for songs on youtube...'
+      });
+      Promise.all(allSongPromises).then(
+        resp => {
+          loader.dismiss();
+          this.navCtrl.push(YoutubeSonglistPage,
+            new NavParams({ youtubeSongList: resp }));
+        },
+        err => {
+          loader.dismiss();
+          console.log(err);
+          let toaster = this.toastCtrl.create({
+            message: 'Failed to find songs on youtube'
+          });
+          toaster.present();
+        }
+      )
+    }, (err) => console.log(err));
+
   }
 
   private findAllOnYouTube(list) {

@@ -248,7 +248,10 @@ export class GapiService {
             if (GoogleAuth.isSignedIn.get()) {
 
                 GoogleAuth.signOut();
+                resolve();
 
+            }else{
+                resolve();
             }
         });
 
@@ -266,6 +269,16 @@ export class GapiService {
             // }
         });
 
+    }
+
+    signIn() {
+        return new Promise((resolve, reject) => {
+
+            this.retrieveInitializedGapi(true)
+                .then(this.signIntoGoogle)
+                .then(resp => resolve(resp), err => reject(err));
+
+        });
     }
 
     signOut() {

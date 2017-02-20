@@ -27,8 +27,8 @@
   <ion-content>
     <ion-list>
       <button ion-item >Sign out - Spotify</button>
-      <button ion-item >Sign out - Google</button>
-      <button ion-item >Revoke access - Google</button>
+      <button ion-item (click)="signOutFromGoogle()" >Sign out - Google</button>
+      <button ion-item (click)="revokeGoogleAccess()">Revoke access - Google</button>
     </ion-list>
   </ion-content>
 
