@@ -3,31 +3,46 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Select playlist and songs</ion-title>
+        <ion-title>Select playlist</ion-title>
     </ion-navbar>
-    <ion-toolbar>
-        <!--<ion-title>Controls</ion-title>-->
+    <!--<ion-toolbar>-->
+    <!--<ion-title>Controls</ion-title>-->
 
-        <!--<button ion-button (click)="back()"> &lt; Back</button>-->
-        <button ion-button (click)="createNewPlaylist()"> Create New Playlist </button>
-        <button ion-button (click)="addSelectedSongsToPlaylist()"> Add selected songs to playlist </button>
-
-
+    <!--<button ion-button (click)="back()"> &lt; Back</button>-->
+    <!--<button ion-button (click)="createNewPlaylist()"> Create New Playlist </button>-->
+    <!--<button ion-button (click)="addSelectedSongsToPlaylist()"> Add selected songs to playlist </button>-->
 
 
-    </ion-toolbar>
+
+
+    <!--</ion-toolbar>-->
 </ion-header>
 
 
 <ion-content padding>
-    <ion-label>YouTube Playlist</ion-label>
-    <ion-select [(ngModel)]="youtubePlaylist">
-        <ion-option *ngFor="let playlist of youtubePlaylists" value="{{playlist.id}}">{{playlist.title}}</ion-option>
-    </ion-select>
+    <form name="playlistSelect" (ngSubmit)="onSelectPlaylist()">
+        <ion-item>
+            <ion-label>Select existing playlist</ion-label>
+            <ion-select [(ngModel)]="youtubePlaylist" name="playlists">
+                <ion-option *ngFor="let playlist of youtubePlaylists" value="{{playlist.id}}">{{playlist.title}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <button name="addSubmit" ion-button color="primary" type="submit">Add to playlist</button>
+    </form>
 
+    Or
 
+    <form name="playlistCreate">
 
-    <ion-list *ngIf="youtubeSonglist != null">
+        <ion-label>Create a new playlist</ion-label>
+        <form name="playlistCreate" (ngSubmit)="onCreatePlaylist()">
+
+            <input [(ngModel)]="newPlaylistName" type="text" name="newPlaylistName" placeholder="Enter playlist name" />
+
+            <button name="createSubmit" ion-button color="primary" type="submit">Create playlist</button>
+        </form>
+    </form>
+    <!--<ion-list *ngIf="youtubeSonglist != null">
         <ion-item *ngFor="let song of youtubeSonglist">
             <ion-checkbox [(ngModel)]="song.isSelected"></ion-checkbox>
             <ion-label>
@@ -36,6 +51,6 @@
                 <ion-icon *ngIf="song.isAdded" name="checkmark"></ion-icon>
             </ion-label>
         </ion-item>
-    </ion-list>
+    </ion-list>-->
 
 </ion-content>

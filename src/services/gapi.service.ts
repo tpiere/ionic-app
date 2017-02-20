@@ -302,7 +302,7 @@ export class GapiService {
         });
     }
 
-    createPlaylist(playlistName: string) {
+    createPlaylist(playlistName: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
 

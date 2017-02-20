@@ -8,7 +8,8 @@ import { PostAuthlandingPage } from '../pages/post-auth-landing/landing';
 import { PlaylistDetailsPage } from '../pages/playlist/playlist';
 import { PopoverPage } from '../pages/playlist/create-popover';
 import {YoutubeSonglistPage} from '../pages/playlist/youtube-songlist';
-import {YoutubePlaylistSelectPage } from '../pages/playlist/youtube-playlist-select';
+import {YoutubeVideoSelectPage } from '../pages/playlist/youtube-video-select';
+import {YoutubePlaylistSelectPage} from '../pages/playlist/youtube-playlist-select';
 import { ListPage } from '../pages/list/list';
 import { HttpModule } from '@angular/http';
 
@@ -25,6 +26,7 @@ import {GapiService} from '../services/gapi.service';
     PlaylistDetailsPage,
     PopoverPage,
     YoutubeSonglistPage,
+    YoutubeVideoSelectPage,
     YoutubePlaylistSelectPage
   ],
   imports: [
@@ -53,6 +55,7 @@ import {GapiService} from '../services/gapi.service';
     PlaylistDetailsPage,
     PopoverPage,
     YoutubeSonglistPage,
+    YoutubeVideoSelectPage,
     YoutubePlaylistSelectPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, GapiService]

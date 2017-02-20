@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Select videos</ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+        <!--<ion-title>Controls</ion-title>-->
+
+        <!--<button ion-button (click)="back()"> &lt; Back</button>-->
+        <!--<button ion-button (click)="createNewPlaylist()"> Create New Playlist </button>-->
+        <button ion-button (click)="addSelectedSongsToPlaylist()"> Add selected songs to playlist </button>
+
+
+
+
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+    <!--<ion-label>YouTube Playlist</ion-label>
+    <ion-select [(ngModel)]="youtubePlaylist">
+        <ion-option *ngFor="let playlist of youtubePlaylists" value="{{playlist.id}}">{{playlist.title}}</ion-option>
+    </ion-select>-->
+
+
+
+    <ion-list *ngIf="youtubeSonglist != null">
+        <ion-item *ngFor="let song of youtubeSonglist">
+            <ion-checkbox [(ngModel)]="song.isSelected"></ion-checkbox>
+            <ion-label>
+                {{song.snippet.title}}
+                <ion-spinner *ngIf="song.loadingPromise != null" name="crescent"></ion-spinner>
+                <ion-icon *ngIf="song.isAdded" name="checkmark"></ion-icon>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+</ion-content>

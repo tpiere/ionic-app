@@ -7,7 +7,7 @@ import Q from 'q';
 import * as gapi from 'google-client-api';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PopoverPage } from './create-popover.ts';
-import {YoutubePlaylistSelectPage} from './youtube-playlist-select';
+import {YoutubeVideoSelectPage} from './youtube-video-select';
 
 import { GapiService } from '../../services/gapi.service'
 import * as _ from 'lodash';
@@ -47,7 +47,7 @@ export class YoutubeSonglistPage {
   }
 
   addToPlaylist(){
-      this.navCtrl.push(YoutubePlaylistSelectPage,
+      this.navCtrl.push(YoutubeVideoSelectPage,
           new NavParams({ youtubeSongList: this.youtubeSonglist }));
   }
 
