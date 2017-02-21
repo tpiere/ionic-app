@@ -40,11 +40,11 @@
             </ion-item>
 
         </ion-list>
-         <ion-item >
-                <button ion-button (click)="createPlaylist()" type="button">+ Create a new playlist</button>
+        <!--<ion-item>
+            <button ion-button (click)="createPlaylist()" type="button">+ Create a new playlist</button>
         </ion-item>
 
-        <button name="addSubmit" ion-button color="primary" type="submit">Add to playlist</button>
+        <button name="addSubmit" ion-button color="primary" type="submit">Add to playlist</button>-->
     </form>
 
     <!--Or
@@ -71,3 +71,22 @@
     </ion-list>-->
 
 </ion-content>
+
+
+<ion-footer>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col width-50>
+                <button full color="secondary" ion-button (click)="createPlaylist()" type="button">
+            + Create Playlist
+            </button>
+            </ion-col>
+            <ion-col width-50>
+                <button full ion-button (click)="onSelectPlaylist()" type="button">
+            Add to playlist
+        </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

@@ -12,39 +12,15 @@
     </ion-buttons>
   </ion-navbar>
 
-  
+
 </ion-header>
 
 
 <ion-content padding>
-<ion-refresher (ionRefresh)="doRefresh($event)">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <h3>Welcome to your first Ionic app!</h3>
-
-  <p>
-    This starter project is our way of helping you get a functional app running in record time.
-  </p>
-  <p>
-    Follow along on the tutorial section of the Ionic docs!
-  </p>
-  <p>
-    <button ion-button color="primary" menuToggle>Toggle Menu</button>
-  </p>
-
   <button ion-button color="secondary" (click)="spotifyLogin()">Login to Spotify</button>
-
-  <button ion-button color="tertiary" (click)="testLocalCors()">Test Local CORS</button>
-
-
-  <button ion-button color="secondary" (click)="testGapi()">Test GAPI</button>
-
-  <ul>
-    <li *ngFor="let video of videos">
-      <iframe id="ytplayer" allowfullscreen="allowfullscreen" type="text/html" width="320" height="180" [src]="video.url" frameborder="0"></iframe>
-    </li>
-  </ul>
-
 
 </ion-content>
