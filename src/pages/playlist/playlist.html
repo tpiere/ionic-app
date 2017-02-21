@@ -5,12 +5,11 @@
         </button>
         <ion-title>Spotify Playlist Details</ion-title>
     </ion-navbar>
-    <ion-toolbar>
-    <!--<ion-title>Controls</ion-title>-->
+    <!--<ion-toolbar>
 
         <button ion-button (click)="back()"> &lt; Back</button>
       <button ion-button (click)="loadAll()"> Find All on YouTube </button>
-  </ion-toolbar>
+  </ion-toolbar>-->
 </ion-header>
 
 
@@ -67,3 +66,12 @@
         </button> New Playlist
     </ion-fab>-->
 </ion-content>
+
+<ion-footer>
+
+     
+      <ion-item class="text-center" (click)="presentActionSheet()">
+        <ion-icon name="more" ></ion-icon>
+      </ion-item>
+  
+</ion-footer>

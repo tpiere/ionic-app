@@ -2,7 +2,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Http, RequestOptions, Request, RequestMethod, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { NavController, NavParams, PopoverController, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, ToastController, LoadingController, ActionSheetController } from 'ionic-angular';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 import Q from 'q';
 import * as gapi from 'google-client-api';
@@ -35,7 +35,8 @@ export class YoutubeVideoSelectPage {
         public popoverCtrl: PopoverController,
         private gapiService: GapiService,
         public toastCtrl: ToastController,
-        public loadingCtrl: LoadingController) {
+        public loadingCtrl: LoadingController,
+        private actionSheetCtrl: ActionSheetController) {
 
     }
 
@@ -81,5 +82,35 @@ export class YoutubeVideoSelectPage {
         // });
         // tasks.reduce(Q.when, Q());
     }
+
+presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Options',
+      buttons: [
+        {
+          text: 'Add selected songs to playlist',
+          handler: () => {
+            this.addSelectedSongsToPlaylist()
+          }
+        },
+        // {
+        //   text: 'Back to playlists',
+        //   handler: () => {
+
+        //     this.back();
+        //   }
+        // },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
+  }
 
 }

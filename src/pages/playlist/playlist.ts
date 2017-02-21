@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Http, RequestOptions, Request, RequestMethod, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { NavController, NavParams, PopoverController, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, ToastController, LoadingController, ActionSheetController } from 'ionic-angular';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 import Q from 'q';
 import * as gapi from 'google-client-api';
@@ -32,7 +32,8 @@ export class PlaylistDetailsPage {
     public popoverCtrl: PopoverController,
     private gapiService: GapiService,
     public toastCtrl: ToastController,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    private actionSheetCtrl: ActionSheetController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.spotifyApi = new SpotifyWebApi();
@@ -202,6 +203,36 @@ export class PlaylistDetailsPage {
       }
     });
     tasks.reduce(Q.when, Q());
+  }
+
+ presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Options',
+      buttons: [
+        {
+          text: 'Find all on YouTube',
+          handler: () => {
+            this.loadAll()
+          }
+        },
+        {
+          text: 'Back to playlists',
+          handler: () => {
+            
+            this.back();
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
   }
 
 }

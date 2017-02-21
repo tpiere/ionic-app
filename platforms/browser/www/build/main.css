@@ -21275,3 +21275,7 @@ sub {
     padding-top: calc(16px + 20px);
   }
 }
+
+.text-center {
+  text-align: center;
+}
