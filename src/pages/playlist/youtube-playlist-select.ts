@@ -57,7 +57,19 @@ export class YoutubePlaylistSelectPage {
             .catch(err => { console.log(err); });
     }
 
-
+    createPlaylist() {
+        this.promptForNewPlaylist().then(
+            (playListName: string): Promise<any> => {
+                return this.gapiService.createPlaylist(playListName);
+            }
+        )
+            .then(
+            (response: any) => {
+                this.loadYoutubePlaylists();
+                this.youtubePlaylist = response.result.id;
+            }
+            ).catch(err => console.log(err));
+    }
 
     onCreatePlaylist() {
         console.log(this.newPlaylistName);
@@ -96,7 +108,7 @@ export class YoutubePlaylistSelectPage {
 
                 });
                 toast.present();
-                loader.dismiss(); 
+                loader.dismiss();
             }
             );
         return false;
@@ -115,6 +127,45 @@ export class YoutubePlaylistSelectPage {
             .then((details) => this.addToPlaylistSucceeded(details));
 
         return false;
+    }
+
+    private promptForNewPlaylist() {
+
+        return new Promise((resolve, reject) => {
+            let prompt = this.alertCtrl.create({
+                title: 'New Playlist',
+                message: `Enter playlist name`,
+                inputs: [
+                    {
+                        name: 'playlistName',
+                        placeholder: 'name',
+                    },],
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        handler: data => {
+                            reject('canceled');
+                        }
+                    },
+                    {
+                        text: 'Ok',
+                        handler: data => {
+                            console.log('Ok clicked ', data.playlistName);
+
+                            if (data.playlistName) {
+                                resolve(data.playlistName);
+                                
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                ]
+            });
+            prompt.present();
+        });
+
+
     }
 
     private addToPlaylistSucceeded(details) {

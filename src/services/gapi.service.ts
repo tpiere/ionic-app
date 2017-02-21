@@ -349,7 +349,7 @@ export class GapiService {
                 .then(this.signIntoGoogle)
                 // .then(this.grantYoutubePermission)
                 .then((api) => {
-                    api.client.youtube.playlists.list({ part: 'snippet', mine: true })
+                    api.client.youtube.playlists.list({ part: 'snippet', mine: true, maxResults:50 })
                         .then(response => resolve(response), err => reject(err));
                 },
                 (err) => {

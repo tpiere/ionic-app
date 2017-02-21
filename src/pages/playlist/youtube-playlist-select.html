@@ -21,16 +21,33 @@
 
 <ion-content padding>
     <form name="playlistSelect" (ngSubmit)="onSelectPlaylist()">
-        <ion-item>
+        <!--<ion-item>
             <ion-label>Select existing playlist</ion-label>
             <ion-select [(ngModel)]="youtubePlaylist" name="playlists">
                 <ion-option *ngFor="let playlist of youtubePlaylists" value="{{playlist.id}}">{{playlist.title}}</ion-option>
             </ion-select>
+        </ion-item>-->
+
+
+        <ion-list radio-group [(ngModel)]="youtubePlaylist" name="playlists">
+            <ion-list-header>
+                Select a playlist
+            </ion-list-header>
+
+            <ion-item *ngFor="let playlist of youtubePlaylists">
+                <ion-label>{{playlist.title}}</ion-label>
+                <ion-radio value="{{playlist.id}}"></ion-radio>
+            </ion-item>
+
+        </ion-list>
+         <ion-item >
+                <button ion-button (click)="createPlaylist()" type="button">+ Create a new playlist</button>
         </ion-item>
+
         <button name="addSubmit" ion-button color="primary" type="submit">Add to playlist</button>
     </form>
 
-    Or
+    <!--Or
 
     <form name="playlistCreate">
 
@@ -41,7 +58,7 @@
 
             <button name="createSubmit" ion-button color="primary" type="submit">Create playlist</button>
         </form>
-    </form>
+    </form>-->
     <!--<ion-list *ngIf="youtubeSonglist != null">
         <ion-item *ngFor="let song of youtubeSonglist">
             <ion-checkbox [(ngModel)]="song.isSelected"></ion-checkbox>
