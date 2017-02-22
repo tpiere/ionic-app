@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Http, RequestOptions, Request, RequestMethod, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { NavController, NavParams, PopoverController, ModalController, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, ModalController, ActionSheetController, ViewController } from 'ionic-angular';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 import Q from 'q';
 import * as gapi from 'google-client-api';
@@ -26,7 +26,8 @@ export class YoutubeVideoDetailsPage {
     public popoverCtrl: PopoverController,
     public modalCtrl: ModalController,
     private gapiService: GapiService,
-    private actionSheetCtrl: ActionSheetController) {
+    private actionSheetCtrl: ActionSheetController,
+    private viewCtrl: ViewController) {
     // If we navigated to this page, we will have an item available as a nav param
     // this.selectedItem = navParams.get('item');
     // this.spotifyApi = new SpotifyWebApi();
@@ -44,6 +45,11 @@ export class YoutubeVideoDetailsPage {
 
     //  })
   }
+
+    dismiss() {
+    let data = { 'foo': 'bar' };
+    this.viewCtrl.dismiss(data);
+    }
 
  
   presentActionSheet() {

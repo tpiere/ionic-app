@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content padding>
     <div>
         <iframe id="ytplayer" 
         allowfullscreen="allowfullscreen" 
@@ -13,4 +13,6 @@
         <div>{{video.spotifyParams.title}}</div>
         <div>{{video.spotifyParams.artist}}</div>
     </div>
+
+    <button ion-button color="primary" (click)="dismiss()">Close</button>
 </ion-content>
