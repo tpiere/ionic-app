@@ -3,7 +3,8 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Spotify Playlist Details</ion-title>
+        <ion-title><img src="/assets/spotify-icons-logos/icons/01_RGB/02_PNG/Spotify_Icon_RGB_Green.png" height="25" style="vertical-align:middle;"/>
+        Spotify Playlist Details</ion-title>
     </ion-navbar>
     <!--<ion-toolbar>
 
@@ -25,14 +26,14 @@
     <!--<button ion-button (click)="addSelectedSongsToPlaylist()"> Add songs to playlist</button>-->
 
 
-    <ion-list *ngIf="youtubePlaylists != null">
+    <!--<ion-list *ngIf="youtubePlaylists != null">
         <ion-item>
             <ion-label>YouTube Playlist</ion-label>
             <ion-select [(ngModel)]="youtubePlaylist">
                 <ion-option *ngFor="let playlist of youtubePlaylists" value="{{playlist.id}}">{{playlist.title}}</ion-option>
             </ion-select>
         </ion-item>
-    </ion-list>
+    </ion-list>-->
 
     <ion-list *ngIf="playlist != null">
         <div *ngFor="let song of playlist.items">
@@ -43,7 +44,8 @@
 
                 <!--<ion-checkbox *ngIf="song.videoId != null" [(ngModel)]="song.isSelected"></ion-checkbox>-->
                 <!--<ion-label>-->
-                    {{song.track.name}} - {{song.track.artists[0].name}}
+                    <div>{{song.track.name}} </div>
+                    <div style="font-size:.8em;color:grey;">{{song.track.artists[0].name}}</div>
 
                     <!--<a (click)="loadSong(song.track.name, song.track.artists[0].name)">
                         <ion-icon name="logo-youtube"></ion-icon>

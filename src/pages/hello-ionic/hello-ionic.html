@@ -1,9 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle="left">
+    <!--<button ion-button menuToggle="left">
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Hello Ionic</ion-title>
+    <ion-title>Hello Ionic</ion-title>-->
 
     <ion-buttons end>
       <button ion-button icon-only menuToggle="right">
@@ -21,6 +21,10 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <button ion-button color="secondary" (click)="spotifyLogin()">Login to Spotify</button>
+  <div style="text-align:center">
+    <img src="/assets/spotify-icons-logos/logos/01_RGB/02_PNG/Spotify_Logo_RGB_Green.png" height="65"/>
+    <button ion-button color="secondary" (click)="spotifyLogin()" full round style="max-width:200px; margin:20px auto;" >Login to Spotify</button>
+  </div>
+  
 
 </ion-content>

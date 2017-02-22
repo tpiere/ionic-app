@@ -56,6 +56,15 @@ export class MyApp {
       }
 
       console.log('accessToken = ', accessToken);
+
+    //    this.platform.registerBackButtonAction(() => {
+    //   const overlayView = this.app._appRoot._overlayPortal._views[0];
+    //   if (overlayView && overlayView.dismiss) {
+    //     overlayView.dismiss();
+    //   } else {
+    //     this.app.goBack();
+    //   }
+    // }, 0);
     });
   }
 
