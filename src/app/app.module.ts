@@ -7,13 +7,15 @@ import { topArtists } from '../pages/top-artists/top-artists.component';
 import { PostAuthlandingPage } from '../pages/post-auth-landing/landing';
 import { PlaylistDetailsPage } from '../pages/playlist/playlist';
 import { PopoverPage } from '../pages/playlist/create-popover';
-import {YoutubeSonglistPage} from '../pages/playlist/youtube-songlist';
-import {YoutubeVideoSelectPage } from '../pages/playlist/youtube-video-select';
-import {YoutubePlaylistSelectPage} from '../pages/playlist/youtube-playlist-select';
+import { YoutubeSonglistPage } from '../pages/playlist/youtube-songlist';
+import { YoutubeVideoSelectPage } from '../pages/playlist/youtube-video-select';
+import { YoutubePlaylistSelectPage } from '../pages/playlist/youtube-playlist-select';
+import { YoutubeVideoDetailsPage } from '../pages/video/youtube-video-details';
+
 import { ListPage } from '../pages/list/list';
 import { HttpModule } from '@angular/http';
 
-import {GapiService} from '../services/gapi.service';
+import { GapiService } from '../services/gapi.service';
 
 @NgModule({
   declarations: [
@@ -27,19 +29,24 @@ import {GapiService} from '../services/gapi.service';
     PopoverPage,
     YoutubeSonglistPage,
     YoutubeVideoSelectPage,
-    YoutubePlaylistSelectPage
+    YoutubePlaylistSelectPage,
+    YoutubeVideoDetailsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {}, {
-      links:[
-        {component: PostAuthlandingPage, 
-          name: 'PostAuthLanding', 
+      links: [
+        {
+          component: PostAuthlandingPage,
+          name: 'PostAuthLanding',
           segment: ':accessToken/playlists',
-          defaultHistory: [HelloIonicPage]},
-         {component: PlaylistDetailsPage, 
-           name: 'PlaylistDetailsPage', 
-           segment: ':accessToken/:userId/playlists/:playlistId',
-           defaultHistory: [HelloIonicPage]}
+          defaultHistory: [HelloIonicPage]
+        },
+        {
+          component: PlaylistDetailsPage,
+          name: 'PlaylistDetailsPage',
+          segment: ':accessToken/:userId/playlists/:playlistId',
+          defaultHistory: [HelloIonicPage]
+        }
       ]
     }),
     HttpModule
@@ -56,8 +63,9 @@ import {GapiService} from '../services/gapi.service';
     PopoverPage,
     YoutubeSonglistPage,
     YoutubeVideoSelectPage,
-    YoutubePlaylistSelectPage
+    YoutubePlaylistSelectPage,
+    YoutubeVideoDetailsPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, GapiService]
+  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, GapiService]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,0 +1,16 @@
+<ion-content>
+    <div>
+        <iframe id="ytplayer" 
+        allowfullscreen="allowfullscreen" 
+        type="text/html" 
+        width="320" 
+        height="180" [src]="video.videoUrl" frameborder="0">
+        </iframe>
+    </div>
+
+    <div>
+        <h3>Spotify details</h3>
+        <div>{{video.spotifyParams.title}}</div>
+        <div>{{video.spotifyParams.artist}}</div>
+    </div>
+</ion-content>

@@ -8,6 +8,7 @@ import * as gapi from 'google-client-api';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PopoverPage } from './create-popover.ts';
 import { YoutubeVideoSelectPage } from './youtube-video-select';
+import { YoutubeVideoDetailsPage } from '../video/youtube-video-details';
 
 import { GapiService } from '../../services/gapi.service'
 import * as _ from 'lodash';
@@ -40,11 +41,10 @@ export class YoutubeSonglistPage {
     console.log(this.youtubeSonglist);
   }
 
-  showVideoDetails(song) {
-    console.log(song);
-    //  this.modalCtrl.create({
-
-    //  })
+  showVideoDetails(video) {
+    console.log(video);
+    let detailsModal = this.modalCtrl.create( YoutubeVideoDetailsPage, { youtubeVideo:video});
+    detailsModal.present();
   }
 
   addToPlaylist() {
