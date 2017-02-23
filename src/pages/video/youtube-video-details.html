@@ -1,18 +1,23 @@
 <ion-content padding>
-    <div>
+    <section >
         <iframe id="ytplayer" 
         allowfullscreen="allowfullscreen" 
         type="text/html" 
-        width="320" 
-        height="180" [src]="video.videoUrl" frameborder="0">
+        width="100%" 
+        height="240" [src]="video.videoUrl" frameborder="0"
+        style="margin:auto;display:block">
         </iframe>
-    </div>
+    </section>
 
-    <div>
-        <h3>Spotify details</h3>
+    <section style="margin-top:30px;">
+        <h1>Spotify details</h1>
         <div>{{video.spotifyParams.title}}</div>
-        <div>{{video.spotifyParams.artist}}</div>
-    </div>
+        <div style="font-size:.8em;color:grey;">{{video.spotifyParams.artist}}</div>
+    </section>
 
-    <button ion-button color="primary" (click)="dismiss()">Close</button>
+   
 </ion-content>
+
+<ion-footer padding>
+    <button ion-button color="primary" (click)="dismiss()" full>Close</button>
+</ion-footer>
