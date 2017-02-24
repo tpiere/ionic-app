@@ -4,8 +4,7 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>
-            <img src="/assets/YouTube-logo-full_color.png" height="65" style="vertical-align:middle;"/>
-            Select videos</ion-title>
+            <img src="/assets/YouTube-logo-full_color.png" height="65" style="vertical-align:middle;" /> Select videos</ion-title>
     </ion-navbar>
     <!--<ion-toolbar>
       <button ion-button (click)="addSelectedSongsToPlaylist()"> Add selected songs to playlist </button>
@@ -23,12 +22,20 @@
 
     <ion-list *ngIf="youtubeSonglist != null">
         <ion-item *ngFor="let song of youtubeSonglist">
-            <ion-checkbox [(ngModel)]="song.isSelected"></ion-checkbox>
-            <ion-label>
+
+
+
+            <ion-checkbox *ngIf="song?.snippet?.title" [(ngModel)]="song.isSelected"></ion-checkbox>
+            <ion-label *ngIf="song?.snippet?.title">
                 {{song.snippet.title}}
                 <ion-spinner *ngIf="song.loadingPromise != null" name="crescent"></ion-spinner>
                 <ion-icon *ngIf="song.isAdded" name="checkmark"></ion-icon>
             </ion-label>
+            <div *ngIf="song.snippet == null">
+                Could not find a video for {{song?.spotifyParams?.title}} by {{song?.spotifyParams?.artist}}
+            </div>
+
+
         </ion-item>
     </ion-list>
 

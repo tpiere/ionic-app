@@ -51,7 +51,9 @@ export class YoutubeVideoDetailsPage {
     this.viewCtrl.dismiss(data);
     }
 
- 
+//search suggestions 
+//https://clients1.google.com/complete/search?client=youtube&hl=en&gl=us&sugexp=ytd3_arm_3&gs_rn=23&gs_ri=youtube&tok=Ua2H7M0xuwuS_UJsJ8HmPw&ds=yt&cp=11&gs_id=37&q=something%20e&callback=google.sbox.p50&gs_gbg=65Q30fCGP9B4Cl89fW1trG7sc9zjLBj
+
   presentActionSheet() {
     // let actionSheet = this.actionSheetCtrl.create({
     //   title: 'Options',

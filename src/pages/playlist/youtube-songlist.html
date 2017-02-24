@@ -19,8 +19,12 @@
 
     <ion-list *ngIf="youtubeSonglist != null">
         <ion-item *ngFor="let song of youtubeSonglist" (click)="showVideoDetails(song)">
-            <ion-icon name="logo-youtube" style="color:#cd201f" ></ion-icon> {{song.snippet.title}}
-            
+            <div *ngIf="song.snippet && song.snippet.title">
+                <ion-icon name="logo-youtube" style="color:#cd201f" ></ion-icon> {{song?.snippet?.title}}
+            </div>
+            <div *ngIf="song.snippet == null">
+                Could not find a video for {{song?.spotifyParams?.title}} by {{song?.spotifyParams?.artist}}
+            </div>
         </ion-item>
     </ion-list>
 

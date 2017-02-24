@@ -166,8 +166,18 @@ export class GapiService {
                             type: "video", maxResults: 1
                         })
                         .then(response => {
-                            let video = response.result.items[0],
+                            let video: any = {},
+                                videoId;
+
+                            if (response.result.items.length > 0) {
+
+                                video = response.result.items[0]
                                 videoId = video.id.videoId;
+                                let urlTemplate = `https://www.youtube.com/embed/${videoId}?autoplay=0&origin=${window.location.origin}`;
+
+                                video.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate)
+
+                            }
 
                             video.spotifyParams = {
                                 title: title,
@@ -175,9 +185,6 @@ export class GapiService {
                             };
 
 
-                            let urlTemplate = `https://www.youtube.com/embed/${videoId}?autoplay=0&origin=${window.location.origin}`;
-
-                            video.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlTemplate)
 
 
 
@@ -250,7 +257,7 @@ export class GapiService {
                 GoogleAuth.signOut();
                 resolve();
 
-            }else{
+            } else {
                 resolve();
             }
         });
@@ -349,7 +356,7 @@ export class GapiService {
                 .then(this.signIntoGoogle)
                 // .then(this.grantYoutubePermission)
                 .then((api) => {
-                    api.client.youtube.playlists.list({ part: 'snippet', mine: true, maxResults:50 })
+                    api.client.youtube.playlists.list({ part: 'snippet', mine: true, maxResults: 50 })
                         .then(response => resolve(response), err => reject(err));
                 },
                 (err) => {
